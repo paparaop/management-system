@@ -1,5 +1,6 @@
 package com.ms.security.entities;
 
+import com.ms.security.config.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_info")
-public class User implements UserDetails {
+@Table
+public class UserInfo extends Auditable<String> implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

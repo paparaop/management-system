@@ -4,7 +4,7 @@ import com.ms.security.dao.request.SignUpRequest;
 import com.ms.security.dao.request.SigninRequest;
 import com.ms.security.dao.response.JwtAuthenticationResponse;
 import com.ms.security.entities.Role;
-import com.ms.security.entities.User;
+import com.ms.security.entities.UserInfo;
 import com.ms.security.repository.UserRepository;
 import com.ms.security.service.AuthenticationService;
 import com.ms.security.service.JwtService;
@@ -23,7 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
+        var user = UserInfo.builder().firstName(request.getFirstName()).lastName(request.getLastName())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER).build();
         userRepository.save(user);
