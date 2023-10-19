@@ -1,7 +1,6 @@
 package com.ms.security.service.impl;
 
 import com.ms.security.dao.request.SignUpRequest;
-import com.ms.security.dao.request.SigninRequest;
 import com.ms.security.dao.response.JwtAuthenticationResponse;
 import com.ms.security.entities.Role;
 import com.ms.security.entities.UserInfo;
@@ -32,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public JwtAuthenticationResponse signin(SigninRequest request) {
+    public JwtAuthenticationResponse signin(SignUpRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail())

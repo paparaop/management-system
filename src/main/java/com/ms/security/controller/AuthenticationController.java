@@ -1,7 +1,6 @@
 package com.ms.security.controller;
 
 import com.ms.security.dao.request.SignUpRequest;
-import com.ms.security.dao.request.SigninRequest;
 import com.ms.security.dao.response.JwtAuthenticationResponse;
 import com.ms.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 }
