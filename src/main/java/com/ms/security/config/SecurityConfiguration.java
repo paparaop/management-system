@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
@@ -60,16 +62,28 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://localhost:9000"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type", ""));
-        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
-        configuration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    public FilterRegistrationBean<CorsFilter> platformCorsFilter() {
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration configAuthenticator = new CorsConfiguration();
+        configAuthenticator.setAllowCredentials(true);
+        //configAuthenticator.addAllowedOrigin("*");
+        configAuthenticator.addAllowedOriginPattern("*");
+        configAuthenticator.addAllowedHeader("Authorization");
+        configAuthenticator.addAllowedHeader("Content-Type");
+        configAuthenticator.addAllowedHeader("Accept");
+        configAuthenticator.addAllowedMethod("POST");
+        configAuthenticator.addAllowedMethod("GET");
+        configAuthenticator.addAllowedMethod("DELETE");
+        configAuthenticator.addAllowedMethod("PUT");
+        configAuthenticator.addAllowedMethod("OPTIONS");
+        configAuthenticator.addAllowedMethod("Location");
+
+        configAuthenticator.setMaxAge(3600L);
+        source.registerCorsConfiguration("/**", configAuthenticator);
+
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+        bean.setOrder(-110);
+        return bean;
     }
 }
