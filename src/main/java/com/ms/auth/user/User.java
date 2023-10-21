@@ -1,23 +1,12 @@
 package com.ms.auth.user;
 
 import com.ms.auth.role.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -47,7 +36,7 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull
-    @JsonIgnore
+    //@JsonIgnore
     private String password;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
